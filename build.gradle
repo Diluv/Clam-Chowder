@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+}
+
+version = "${project_version}" + getBuildNumber() + (isSnapshot() ? "-snapshot" : '')
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+static String getBuildNumber() {
+    return System.getenv("BUILD_NUMBER") ?: "0"
+}
+
+static boolean isSnapshot() {
+    String ref = System.getenv("GITHUB_REF");
+    if (ref != null && ref.startsWith("refs/tags/v")) {
+        return false
+    }
+    return true
+}
+
+jar {
+    manifest {
+        attributes([
+            'Timestamp': System.currentTimeMillis(),
+            'Specification-Title': project.archivesBaseName,
+            'Specification-Vendor': project.vendor,
+            'Specification-Version': project.version,
+            'Implementation-Title': project.archivesBaseName,
+            'Implementation-Version': project.version,
+            'Implementation-Vendor' : project.vendor,
+            'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
+            'Built-On-Java': "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})"
+        ])
+    }
+}
