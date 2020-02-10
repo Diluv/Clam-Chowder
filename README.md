@@ -4,7 +4,11 @@ Clam Chowder is a modern [ClamAV](https://www.clamav.net/) client written in Jav
 
 ## Maven Info
 
-Coming soon to a maven central near you! 🙃
+```
+dependencies {
+    implementation group: 'com.diluv.clamchowder', name: 'ClamChowder', version: 'PUT_VERSION_HERE'
+}
+```
 
 ## Getting Started
 

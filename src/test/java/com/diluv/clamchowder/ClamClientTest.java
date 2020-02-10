@@ -35,6 +35,7 @@ public class ClamClientTest {
             File oreo = new File(url.getFile());
             fileList.put(oreo, ScanResult.Status.OK);
 
+            // "Virus" created to prevent issues with antivirus deleting it.
             File virus = new File(oreo.getParentFile(), "virus.txt");
             fileList.put(virus, ScanResult.Status.FOUND);
             try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(virus), Charset.defaultCharset()))) {
@@ -49,7 +50,7 @@ public class ClamClientTest {
     public void test() {
         ClamClient clamClient = new ClamClient(CONTAINER.getContainerIpAddress(), CONTAINER.getFirstMappedPort());
         try {
-            clamClient.ping();
+            Assertions.assertTrue(clamClient.ping());
             for (File file : fileList.keySet()) {
                 ScanResult result = clamClient.scan(file);
                 Assertions.assertSame(result.getStatus(), fileList.get(file));
