@@ -141,6 +141,17 @@ public class ClamClient {
     }
     
     /**
+     * Requests the version of the ClamAV server.
+     * 
+     * @return The version of the ClamAV server.
+     */
+    public String getVersion () throws IOException {
+        
+        final byte[] resp = this.sendCommand(Constants.CMD_VERSION);
+        return new String(resp, StandardCharsets.US_ASCII);
+    }
+    
+    /**
      * Sends a command to the ClamAV server and checks if the response matches an expected
      * result.
      * 

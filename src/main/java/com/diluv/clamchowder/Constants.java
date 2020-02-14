@@ -54,6 +54,11 @@ public class Constants {
     public static final byte[] RSP_RELOADING = encode("RELOADING", false);
     
     /**
+     * The encoded bytes for the VERSION command.
+     */
+    public static final byte[] CMD_VERSION = encode("VERSION", true);
+    
+    /**
      * The encoded bytes for the UNKNOWN COMMAND response.
      */
     public static final byte[] RSP_UNKNOWN_COMMAND = encode("UNKNOWN COMMAND", false);
