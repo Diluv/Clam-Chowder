@@ -18,52 +18,6 @@ import java.util.Arrays;
 public class ClamClient {
     
     /**
-     * The encoded bytes for the PING command.
-     */
-    public static final byte[] MSG_PING = encode("PING", true);
-    
-    /**
-     * The encoded bytes for the PONG response.
-     */
-    public static final byte[] MSG_PONG = encode("PONG", false);
-    
-    /**
-     * The encoded bytes for the INSTREAM command.
-     */
-    public static final byte[] MSG_INSTREAM = encode("INSTREAM", true);
-    
-    /**
-     * The encoded bytes for the UNKNOWN COMMAND response.
-     */
-    public static final byte[] MSG_UNKNOWN_COMMAND = encode("UNKNOWN COMMAND", false);
-    
-    /**
-     * The encoded bytes for the terminate command.
-     */
-    public static final byte[] MSG_TERMINATE = new byte[] { 0, 0, 0, 0 };
-    
-    /**
-     * The default ClamAV port value.
-     */
-    public static final int DEFAULT_PORT = 3310;
-    
-    /**
-     * The default timeout for connections in milliseconds.
-     */
-    public static final int DEFAULT_TIMEOUT = 1000;
-    
-    /**
-     * The default buffer size used when sending scan data to the server.
-     */
-    public static final int DEFAULT_SCAN_CHUNK_SIZE = 4096;
-    
-    /**
-     * The default buffer size used when reading responses from the server. The default size is
-     * very low due to the average response only being a couple bytes long.
-     */
-    public static final int DEFAULT_READ_BUFFER_SIZE = 128;
-    
-    /**
      * The host name to connect to.
      */
     private final String host;
@@ -98,7 +52,7 @@ public class ClamClient {
      */
     public ClamClient(String host) {
         
-        this(host, DEFAULT_PORT);
+        this(host, Constants.DEFAULT_PORT);
     }
     
     /**
@@ -110,7 +64,7 @@ public class ClamClient {
      */
     public ClamClient(String host, int port) {
         
-        this(host, port, DEFAULT_TIMEOUT);
+        this(host, port, Constants.DEFAULT_TIMEOUT);
     }
     
     /**
@@ -123,7 +77,7 @@ public class ClamClient {
      */
     public ClamClient(String host, int port, int timeout) {
         
-        this(host, port, timeout, DEFAULT_SCAN_CHUNK_SIZE, DEFAULT_READ_BUFFER_SIZE);
+        this(host, port, timeout, Constants.DEFAULT_SCAN_CHUNK_SIZE, Constants.DEFAULT_READ_BUFFER_SIZE);
     }
     
     /**
@@ -170,7 +124,7 @@ public class ClamClient {
      */
     public boolean ping () throws IOException {
         
-        return this.sendCommand(MSG_PING, MSG_PONG);
+        return this.sendCommand(Constants.MSG_PING, Constants.MSG_PONG);
     }
     
     /**
@@ -252,7 +206,7 @@ public class ClamClient {
         
         try (Socket socket = this.getSocket(); OutputStream clamStream = new BufferedOutputStream(socket.getOutputStream())) {
             
-            clamStream.write(MSG_INSTREAM);
+            clamStream.write(Constants.MSG_INSTREAM);
             clamStream.flush();
             
             final byte[] buffer = new byte[this.scanChunkSize];
@@ -281,7 +235,7 @@ public class ClamClient {
                 }
                 
                 // Tell ClamAV that we are done and want to close the connection.
-                clamStream.write(MSG_TERMINATE);
+                clamStream.write(Constants.MSG_TERMINATE);
                 clamStream.flush();
                 
                 // Read the scan results for the file.
@@ -311,20 +265,5 @@ public class ClamClient {
             
             return outputStream.toByteArray();
         }
-    }
-    
-    /**
-     * Encodes a command into the expected ASCII format, and applies the proper null
-     * termination formatting.
-     * 
-     * @param command The raw command to send. This should not have any termination formatting
-     *        applied to it.
-     * @param outgoing Whether the command is being sent (true) or received (false).
-     * @return The command as an ASCII encoded byte array and null termination.
-     */
-    public static byte[] encode (String command, boolean outgoing) {
-        
-        final String toEncode = outgoing ? "z" + command + "\0" : command + "\0";
-        return toEncode.getBytes(StandardCharsets.US_ASCII);
     }
 }
