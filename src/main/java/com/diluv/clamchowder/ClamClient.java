@@ -128,6 +128,19 @@ public class ClamClient {
     }
     
     /**
+     * Requests that the ClamAV server reloads it's virus database. This will reset the known
+     * file hashes for previously scanned files. Keep in mind that reloading can take a moment
+     * to complete. When ClamAV is reloading additional requests may be delayed or even time
+     * out.
+     * 
+     * @return Whether or not the server accepted the reload command.
+     */
+    public boolean reload () throws IOException {
+        
+        return this.sendCommand(Constants.CMD_RELOAD, Constants.RSP_RELOADING);
+    }
+    
+    /**
      * Sends a command to the ClamAV server and checks if the response matches an expected
      * result.
      * 

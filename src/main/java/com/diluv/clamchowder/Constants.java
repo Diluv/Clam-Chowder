@@ -44,6 +44,16 @@ public class Constants {
     public static final byte[] CMD_INSTREAM = encode("INSTREAM", true);
     
     /**
+     * The encoded bytes for the RELOAD command.
+     */
+    public static final byte[] CMD_RELOAD = encode("RELOAD", true);
+    
+    /**
+     * The encoded bytes for the RELOADING response.
+     */
+    public static final byte[] RSP_RELOADING = encode("RELOADING", false);
+    
+    /**
      * The encoded bytes for the UNKNOWN COMMAND response.
      */
     public static final byte[] RSP_UNKNOWN_COMMAND = encode("UNKNOWN COMMAND", false);
