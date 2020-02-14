@@ -124,7 +124,7 @@ public class ClamClient {
      */
     public boolean ping () throws IOException {
         
-        return this.sendCommand(Constants.MSG_PING, Constants.MSG_PONG);
+        return this.sendCommand(Constants.CMD_PING, Constants.RSP_PONG);
     }
     
     /**
@@ -206,7 +206,7 @@ public class ClamClient {
         
         try (Socket socket = this.getSocket(); OutputStream clamStream = new BufferedOutputStream(socket.getOutputStream())) {
             
-            clamStream.write(Constants.MSG_INSTREAM);
+            clamStream.write(Constants.CMD_INSTREAM);
             clamStream.flush();
             
             final byte[] buffer = new byte[this.scanChunkSize];
@@ -235,7 +235,7 @@ public class ClamClient {
                 }
                 
                 // Tell ClamAV that we are done and want to close the connection.
-                clamStream.write(Constants.MSG_TERMINATE);
+                clamStream.write(Constants.CMD_TERMINATE);
                 clamStream.flush();
                 
                 // Read the scan results for the file.

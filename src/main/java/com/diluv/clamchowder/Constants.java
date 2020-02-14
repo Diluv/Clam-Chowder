@@ -31,27 +31,27 @@ public class Constants {
     /**
      * The encoded bytes for the PING command.
      */
-    public static final byte[] MSG_PING = encode("PING", true);
+    public static final byte[] CMD_PING = encode("PING", true);
     
     /**
      * The encoded bytes for the PONG response.
      */
-    public static final byte[] MSG_PONG = encode("PONG", false);
+    public static final byte[] RSP_PONG = encode("PONG", false);
     
     /**
      * The encoded bytes for the INSTREAM command.
      */
-    public static final byte[] MSG_INSTREAM = encode("INSTREAM", true);
+    public static final byte[] CMD_INSTREAM = encode("INSTREAM", true);
     
     /**
      * The encoded bytes for the UNKNOWN COMMAND response.
      */
-    public static final byte[] MSG_UNKNOWN_COMMAND = encode("UNKNOWN COMMAND", false);
+    public static final byte[] RSP_UNKNOWN_COMMAND = encode("UNKNOWN COMMAND", false);
     
     /**
      * The encoded bytes for the terminate command.
      */
-    public static final byte[] MSG_TERMINATE = new byte[] { 0, 0, 0, 0 };
+    public static final byte[] CMD_TERMINATE = new byte[] { 0, 0, 0, 0 };
     
     /**
      * Encodes a command into the expected ASCII format, and applies the proper null
