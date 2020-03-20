@@ -20,7 +20,7 @@ public class ClamClientTest {
     private static final GenericContainer CONTAINER;
 
     static {
-        CONTAINER = new GenericContainer<>("mailu/clamav:1.7")
+        CONTAINER = new GenericContainer<>("diluv/clamav")
                 .withExposedPorts(3310)
                 .waitingFor(Wait.forHealthcheck().withStartupTimeout(Duration.ofMinutes(5)));
         CONTAINER.start();
