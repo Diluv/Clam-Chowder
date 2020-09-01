@@ -76,8 +76,8 @@ tasks.withType(Sign) {
 
 nexusStaging {
     packageGroup = 'com.diluv'
-    numberOfRetries = 20
-    delayBetweenRetriesInMillis = 3000
+    username = System.getenv("OSSRH_USERNAME")
+    password = System.getenv("OSSRH_PASSWORD")
 }
 
 nexusPublishing {
@@ -130,13 +130,8 @@ publishing {
     }
 }
 
-nexusStaging {
-    username = System.getenv("OSSRH_USERNAME")
-    password = System.getenv("OSSRH_PASSWORD")
-}
-
 static String getBuildNumber() {
-    return System.getenv("BUILD_NUMBER") ?: "0"
+    return System.getenv("GITHUB_RUN_NUMBER") ?: "0"
 }
 
 static boolean isSnapshot() {
