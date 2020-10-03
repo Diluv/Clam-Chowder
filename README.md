@@ -4,9 +4,16 @@ Clam Chowder is a modern [ClamAV](https://www.clamav.net/) client written in Jav
 
 ## Maven Info
 
-```
+```gradle
 dependencies {
-    implementation group: 'com.diluv.clamchowder', name: 'ClamChowder', version: 'PUT_VERSION_HERE'
+    implementation group: 'com.diluv.clamchowder', name: 'ClamChowder', version: '<PUT_VERSION_HERE>'
+}
+```
+
+(or the short version):
+```gradle
+dependencies {
+    implementation 'com.diluv.clamchowder:ClamChowder:<PUT_VERSION_HERE>'
 }
 ```
 
